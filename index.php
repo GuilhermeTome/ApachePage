@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Home | ApachePage</title>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<style>
@@ -68,6 +68,18 @@
 			text-decoration: underline;
 		}
 
+		.special-section {
+			border-bottom: 1px solid black;
+			margin: 0px 20px;
+			padding: 0 30px 30px 30px;
+		}
+		.special-section ul {
+			list-style: none;
+		}
+		.special-section li {
+			margin-bottom: 5px;	
+		}
+
 	</style>
 </head>
 <body>
@@ -87,24 +99,51 @@
 				<?php
 				$diretorio = dir("./");
 
+				$datafiles = [];
+				$datafolders = [];
 				while($arquivo = $diretorio -> read()):
-					if($arquivo != '.' && $arquivo != '..' && $arquivo != 'index.php' && $arquivo != 'phpinfo.php' && $arquivo != 'README.md' && $arquivo != '.git' && $arquivo != '.gitignore'):
-						$count = count(explode('.', $arquivo));
+					if($arquivo != '.' && $arquivo != '..' && $arquivo != 'index.php' && $arquivo != 'phpinfo.php' && $arquivo != 'README.md' && $arquivo != '.git' && $arquivo != '.gitignore'){
+						if(count(explode('.', $arquivo)) > 1) {
+							$datafiles[$arquivo] = $arquivo;
+						} else {
+							$datafolders[$arquivo] = $arquivo;
+						}
+					}
+				endwhile;
+
+				ksort($datafolders);
+				ksort($datafiles);
+				foreach($datafolders as $folder):
 					?>
 						<li>
-							<a href="<?= $arquivo; ?>" target="_blank">
-								<i class="material-icons"><?= ($count > 1)? "insert_drive_file" : "folder" ;?></i>
-								<span><?= $arquivo; ?></span>
+							<a href="<?= $folder; ?>" target="_blank">
+								<i class="material-icons">folder</i>
+								<span><?= $folder; ?></span>
 							</a>
 						</li>
 					<?php
-					endif;
-				endwhile;
+				endforeach;
+				foreach($datafiles as $file):
+					?>
+						<li>
+							<a href="<?= $file; ?>" target="_blank">
+								<i class="material-icons">insert_drive_file</i>
+								<span><?= $file; ?></span>
+							</a>
+						</li>
+					<?php
+				endforeach;
 
 				$diretorio->close();
 				?>
 			</ul>
 		</div>
+	</section>
+	<section class="special-section">
+		<ul>
+			<li>Total Folders: <?= count($datafolders) ?></li>
+			<li>Total Files:  <?= count($datafiles) ?></li>
+		</ul>
 	</section>
 </body>
 </html>
