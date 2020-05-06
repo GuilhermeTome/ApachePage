@@ -19,19 +19,28 @@
 			display:flex;
 			height:80px;
 			padding: 0 0 0 20px;
-			line-height: 80px;
 			justify-content: space-between;
 			align-items: center;
-			background-color: #a7ffeb;
+			background-color: #424242;
+			color: white;
+		}
+		.navbar div {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 80px;
+			line-height: 80px;
 		}
 		.navbar a {
+			color: white;
 			text-decoration: none;
 			padding: 0 30px;
 			font-stretch: 300;
-			transition: 600ms;
+			transition: 300ms;
 		}
 		.navbar a:hover {
-			background-color: #64ffda;
+			background-color: #e0e0e0;
+			color: black;
 		}
 
 		.section {
@@ -64,7 +73,10 @@
 <body>
 	<nav class="navbar">
 		<h1>Files and folders</h1>
-		<a href="phpinfo.php" target="_blank">view phpinfo() file</a>
+		<div>
+			<a href="phpmyadmin/" target="_blank">phpmyadmin</a>
+			<a href="phpinfo.php" target="_blank">view phpinfo() file</a>
+		</div>
 	</nav>
 	
 	<section class="section">
@@ -76,9 +88,8 @@
 				$diretorio = dir("./");
 
 				while($arquivo = $diretorio -> read()):
-					if($arquivo != '.' && $arquivo != '..' && $arquivo != 'index.php' && $arquivo != 'phpinfo.php'):
+					if($arquivo != '.' && $arquivo != '..' && $arquivo != 'index.php' && $arquivo != 'phpinfo.php' && $arquivo != 'README.md' && $arquivo != '.git' && $arquivo != '.gitignore'):
 						$count = count(explode('.', $arquivo));
-						
 					?>
 						<li>
 							<a href="<?= $arquivo; ?>" target="_blank">
@@ -86,12 +97,11 @@
 								<span><?= $arquivo; ?></span>
 							</a>
 						</li>
-
 					<?php
 					endif;
 				endwhile;
 
-				$diretorio -> close();
+				$diretorio->close();
 				?>
 			</ul>
 		</div>
