@@ -12,6 +12,7 @@ while ($arquivo = $diretorio->read()):
         $arquivo != 'phpinfo.php' &&
         $arquivo != 'README.md' &&
         $arquivo != '.git' &&
+        $arquivo != 'ApachePage.png' &&
         $arquivo != '.gitignore'
     ) {
         if (count(explode('.', $arquivo)) > 1) {
@@ -204,7 +205,7 @@ ksort($datafiles);
                         <li class="filesystem__item">
                             <a class="filesystem__link" href="<?= $folder ?>" target="_blank">
                                 <i class="material-icons">folder</i>
-                                <span><?= $folder ?></span>
+                                <span>./<?= $folder ?></span>
                             </a>
                         </li>
                     <?php endforeach; ?>
