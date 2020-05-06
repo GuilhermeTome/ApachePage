@@ -12,6 +12,16 @@ Only use git in main apache main directory or copy files inside them
 git clone https://github.com/GuilhermeTome/ApachePage.git
 ```
 
+## Updating
+
+To update your local dependencies use this command:
+
+```
+git pull
+```
+
+If you do not use git, only overwrite older files.
+
 ## Functions
 
 * List Folders

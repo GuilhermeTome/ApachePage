@@ -139,6 +139,13 @@ ksort($datafiles);
             font-size: 2.5rem;
         }
 
+        .section__sub_title {
+            color: #6C6C6C;
+            font-weight: 300;
+            font-size: 1rem;
+            padding-left: 10px;
+        }
+
         .filesystem {
             list-style: none;
         }
@@ -197,7 +204,8 @@ ksort($datafiles);
                             $datafiles
                         ) ?></b></p>
                     </div>
-                    <h3 class="section__title">Listening in this folder:</h3>
+                    <h3 class="section__title">Reading in this folder:</h3>
+                    <p class="section__sub_title"><?= getcwd() ?></p>
                 </header>
             
                 <ul class="filesystem">
