@@ -124,12 +124,15 @@ $fs = new FileDirectory('./');
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        :root {
+           font-size: 14px; 
+        }
+
         * {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
 			font-family: 'Montserrat', sans-serif;
-			font-stretch: 100;
 		}
 
         body {
@@ -137,7 +140,9 @@ $fs = new FileDirectory('./');
         }
 
         .logo {
+            position: relative;
             color: #6C6C6C;
+            z-index: 1;
         }
 
         .container {
@@ -152,9 +157,14 @@ $fs = new FileDirectory('./');
 		.header {
 			display:flex;
 			align-items: center;
-			height:80px;
+			width: 100%;
+            height: 80px;
 			background-color: #fff;
             box-shadow: 0 15px 30px rgba(100, 100, 100, .2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
 		}
 
         .header__container {
@@ -163,11 +173,88 @@ $fs = new FileDirectory('./');
             align-items: center;
         }
 
+        .nav-toggler {
+            position: relative;
+            width: 30px;
+            height: 15px;
+            background: none;
+            border: none;
+            z-index: 1;
+        }
+
+        .nav-toggler__item {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #000;
+            border-radius: 100px;
+            transition: all .3s ease-in-out;
+        }        
+
+        .nav-toggler__item:nth-child(1) {
+            top: 0;
+        }
+        
+        .nav-toggler__item:nth-child(2) {
+            top: 6px;
+        }
+
+        .nav-toggler__item:nth-child(3) {
+            top: 12px;
+        }
+
+        .nav-toggler.is-active .nav-toggler__item {
+            top: 50%;
+            transform: translate3d(0, -50%, 0);
+        }
+
+        .nav-toggler.is-active .nav-toggler__item:nth-child(1) {
+            transform: translate3d(0, -50%, 0) rotate(45deg);            
+        }
+        
+        .nav-toggler.is-active .nav-toggler__item:nth-child(2) {
+            transform: translate3d(0, -50%, 0) rotate(45deg);            
+        }
+
+        .nav-toggler.is-active .nav-toggler__item:nth-child(3) {
+            transform: translate3d(0, -50%, 0) rotate(-45deg);            
+        }
+
 		.menu {
 			display: flex;
-			justify-content: space-between;
+            flex-direction: column;
+			justify-content: center;
 			align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #f5f5fa;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+            transition: all .3s ease-in-out;
 		}
+
+        .menu.is-active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        @media screen and (min-width: 660px) {
+            .menu {
+                position: static;
+                pointer-events: all;
+                flex-direction: row;
+                justify-content: space-between;
+                background: transparent;
+                opacity: 1;
+            }
+
+            .nav-toggler { display: none; }
+        }
 
         .menu__link {
             display: inline-flex;
@@ -188,6 +275,11 @@ $fs = new FileDirectory('./');
             background: rgba(240, 83, 64, .12);
         }
 
+        main {
+            margin-top: 80px;
+            position: relative;
+        }
+
         .section {
             padding-top: 60px;
             padding-bottom: 60px;      
@@ -195,14 +287,27 @@ $fs = new FileDirectory('./');
 
         .section__header {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
             align-items: center;
         }
 
+
         .section__meta {
             display: flex;
+            justify-content: center;
             align-items: center;
             margin-bottom: 10px;
+        }
+
+        @media screen and (min-width: 660px) {
+            .section__header {
+                flex-direction: row;
+            }
+
+            .section__meta {
+                justify-content: flex-start;
+            }
         }
 
         .section__info {
@@ -230,8 +335,20 @@ $fs = new FileDirectory('./');
 
         .section__title {
             color: #6C6C6C;
-            font-weight: 300;
-            font-size: 2.5rem;
+            font-weight: 600;
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+
+        @media screen and (min-width: 660px) {
+            .section__title {
+                font-size: 2.5rem;
+                font-weight: 300;
+                text-align: left;
+            }
         }
 
         .filesystem {
@@ -272,12 +389,15 @@ $fs = new FileDirectory('./');
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
-        .field--horizontal {
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
+        @media screen and (min-width: 660px) {
+            .field--horizontal {
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
         }
 
         .field--horizontal .field__label {
@@ -311,6 +431,11 @@ $fs = new FileDirectory('./');
 	<header class="header">
         <div class="header__container container">
             <h1 class="logo">Files and folders</h1>
+            <button class="nav-toggler">
+                <span class="nav-toggler__item"></span>
+                <span class="nav-toggler__item"></span>
+                <span class="nav-toggler__item"></span>
+            </button>
             <nav class="menu">
                 <a class="menu__link" href="phpmyadmin/" target="_blank">phpmyadmin</a>
                 <a class="menu__link" href="phpinfo.php" target="_blank">view phpinfo() file</a>
@@ -355,6 +480,14 @@ $fs = new FileDirectory('./');
         const order = orderby.elements.order;
         order.addEventListener('change', e => {
             orderby.submit();
+        });
+
+        const toggler = document.querySelector(".nav-toggler");
+        const nav = document.querySelector('.menu');
+
+        toggler.addEventListener('click', function (event) {
+            this.classList.toggle('is-active');
+            nav.classList.toggle('is-active');
         });
     </script>
 </body>
