@@ -32,35 +32,40 @@ class FileDirectory
 
     public function getFiles($sort = true)
     {
-        $sort ? ksort($this->files) : krsort($this->files);
+        if ($this->files !== null) {
+            $sort ? ksort($this->files) : krsort($this->files);
+        }
 
-        return $this->files;
+        return $this->files ?? [];
     }
 
     public function getTotalFiles()
     {
-        return count($this->files);
+        return $this->files ? count($this->files) : 0;
     }
 
     public function getFolders($sort = true)
     {
-        $sort ? ksort($this->folders) : krsort($this->folders);
+        if ($this->folders) {
+            $sort ? ksort($this->folders) : krsort($this->folders);
+        }
 
-        return $this->folders;
+        return $this->folders ?? [];
     }
 
     public function getTotalFolders()
     {
-        return count($this->folders);
+        return $this->folders ? count($this->folders) : 0;
     }
 
     public function getAll($sort = true)
     {
         $all = array_merge($this->getFiles(), $this->getFolders());
+        if ($all !== null) {
+            $sort ? ksort($all) : krsort($all);
+        }
 
-        $sort ? ksort($all) : krsort($all);
-
-        return $all;
+        return $all ?? [];
     }
 
     public function getTotal()
