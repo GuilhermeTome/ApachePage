@@ -128,6 +128,18 @@ $fs = new FileDirectory('./');
            font-size: 14px; 
         }
 
+        @media screen and (min-width: 660px) {
+            :root {
+                font-size: 15px;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            :root {
+                font-size: 16px;
+            }
+        }
+
         * {
 			margin: 0;
 			padding: 0;
